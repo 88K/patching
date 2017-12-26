@@ -4,8 +4,10 @@
   tasks:
     - name: Check Updates
       shell: apt update
+      become: true
       
     - name: Running security upgrades (unattended upgrades)
       shell: unattended-upgrades
+      become: true
 
  
