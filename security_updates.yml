@@ -7,7 +7,7 @@
         update_cache: yes
       
     - name: Running security upgrades (unattended upgrades)
-      shell: unattended-upgrades
+      shell: unattended-upgrades -v
       
       
 
