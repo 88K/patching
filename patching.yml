@@ -1,0 +1,10 @@
+---
+  tasks:
+    - name: Check Updates
+      shell: apt clean && apt update
+      
+    - name: Running security upgrades (unattended upgrades)
+      shell: unattended-upgrades
+
+    - name: Check upgradable packages
+      shell: apt update && apt --list upgradable
