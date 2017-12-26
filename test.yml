@@ -3,6 +3,7 @@
   hosts: all
   tasks:
     - name: Test
-      shell: apt-get update
+      apt:
+      update_cache: yes
 
  
