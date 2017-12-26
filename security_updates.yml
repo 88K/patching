@@ -3,7 +3,7 @@
   hosts: all
   tasks:
     - name: Check Updates
-      shell: apt clean && apt update
+      shell: apt update
       
     - name: Running security upgrades (unattended upgrades)
       shell: unattended-upgrades
