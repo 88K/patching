@@ -2,18 +2,9 @@
 - name: Update_All_Packages
   hosts: all
   tasks:
-   - name: Update Cache
-     apt:
-       update_cache: yes
-        
-   - name: Upgrade all packages to the latest version
-     apt:
-       name: "*"
-       state: latest
-
-   - name: Update all packages to the latest version
-     apt:
-       upgrade: dist
+   - name: Update_All_Packages
+     shell: apt-get clean && apt-get update && apt-get upgrade && apt-get dist-upgrade
+     
 
 
  
