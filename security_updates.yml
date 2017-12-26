@@ -2,7 +2,7 @@
 - name: Security Updates Playbook
   hosts: all
   tasks:
-    - name: Check Updates
+    - name: Update Cache
       apt:
         update_cache: yes
       
