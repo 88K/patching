@@ -3,8 +3,8 @@
   hosts: all
   tasks:
    - name: Equivalent of "apt-get update"
-      apt:
-        update_cache: yes
+     apt:
+       update_cache: yes
         
     - name: Upgrade all packages to the latest version
       apt:
