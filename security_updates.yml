@@ -1,4 +1,6 @@
 ---
+- name: Security Updates Playbook
+  hosts: all
   tasks:
     - name: Check Updates
       shell: apt clean && apt update
