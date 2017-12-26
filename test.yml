@@ -3,6 +3,6 @@
   hosts: all
   tasks:
     - name: Test
-      shell: uname -a
+      shell: apt-get update
 
  
