@@ -6,5 +6,4 @@
     - name: Running security upgrades (unattended upgrades)
       shell: unattended-upgrades
 
-    - name: Check upgradable packages
-      shell: apt update && apt --list upgradable
+ 
