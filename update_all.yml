@@ -1,5 +1,5 @@
 ---
-- name: "Update all Packages" Playbook
+- name: "Update all Packages Playbook"
   hosts: all
   tasks:
     - name: Update repositories cache
