@@ -1,11 +1,10 @@
 ---
 - name: Security Updates Playbook
   hosts: all
-  become: true
-  become_method: sudo
   tasks:
     - name: Check Updates
-      shell: apt update
+      apt:
+      update_cache: yes
       
     - name: Running security upgrades (unattended upgrades)
       shell: unattended-upgrades
