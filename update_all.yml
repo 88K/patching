@@ -2,7 +2,7 @@
 - name: Update_All_Packages
   hosts: all
   tasks:
-   - name: Equivalent of "apt-get update"
+   - name: Update Cache
      apt:
        update_cache: yes
         
