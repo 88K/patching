@@ -4,13 +4,10 @@
   tasks:
     - name: Check Updates
       shell: apt update
-      become: true
-      become_method: sudo
       
     - name: Running security upgrades (unattended upgrades)
       shell: unattended-upgrades
-      become: true
-      become_method: sudo
+      
       
 
  
