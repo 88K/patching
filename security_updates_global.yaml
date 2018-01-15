@@ -2,6 +2,14 @@
 - name: Security Updates Playbook for RedHat and Debian based systems.
   hosts: all
   tasks:
+    - name: Purge Old Kernels - Debian OS Family
+      shell: purge-old-kernels -y
+      when: ansible_os_family == "Debian"
+
+    - name: Remove unwanted packages - Debian OS Family
+      shell: apt-get autoremove -y
+      when: ansible_os_family == "Debian"
+         
     - name: Update Cache - Debian OS Family
       apt:
         update_cache: yes
@@ -10,6 +18,16 @@
     - name: Running security upgrades (unattended upgrades)
       shell: unattended-upgrades -v
       when: ansible_os_family == "Debian"
+
+    - name: Install yum-utils - RedHat OS Family
+      yum: 
+        name: yum-utils
+        state: latest
+      when: ansible_os_family == "RedHat"
+
+    - name: Remove Old Kernels - RedHat OS Family
+      shell: package-cleanup --oldkernels --count=2
+      when: ansible_os_family == "RedHat"
 
     - name: Update Cache - RedHat OS Family
       yum:
@@ -30,3 +48,4 @@
 
     - name: Installing Security Updates on RedHat based systems (Type - update-minimal)
       shell: yum update-minimal --security -y
+      
