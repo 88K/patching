@@ -1,0 +1,32 @@
+---
+- name: Security Updates Playbook for RedHat and Debian based systems.
+  hosts: all
+  tasks:
+    - name: Update Cache - Debian OS Family
+      apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Running security upgrades (unattended upgrades)
+      shell: unattended-upgrades -v
+      when: ansible_os_family == "Debian"
+
+    - name: Update Cache - RedHat OS Family
+      yum:
+        update_cache: yes
+      when: ansible_os_family == "RedHat" 
+
+    - name: Install yum security plugin on RHEL 5.X 
+      yum: 
+        name: yum-security 
+        state: latest
+      when: ansible_os_family == "RedHat" and ansible_lsb.major_release | int <6
+
+    - name: Install yum security plugin on RHEL 6.X 
+      yum: 
+        name: yum-plugin-security
+        state: latest
+      when: ansible_os_family == "RedHat" and ansible_lsb.major_release | int >=6
+
+    - name: Installing Security Updates on RedHat based systems (Type - update-minimal)
+      shell: yum update-minimal --security -y
