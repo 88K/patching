@@ -26,7 +26,7 @@
       when: ansible_os_family == "RedHat"
 
     - name: Remove Old Kernels - RedHat OS Family
-      shell: package-cleanup --oldkernels --count=2
+      shell: package-cleanup --oldkernels --count=2 -y
       when: ansible_os_family == "RedHat"
 
     - name: Update Cache - RedHat OS Family
