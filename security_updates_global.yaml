@@ -48,4 +48,4 @@
 
     - name: Installing Security Updates on RedHat based systems (Type - update-minimal)
       shell: yum update-minimal --security -y
-      
+      when: ansible_os_family == "RedHat"
