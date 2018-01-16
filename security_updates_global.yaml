@@ -5,24 +5,24 @@
   tasks:
     - name: Purge old kernels - Ubuntu
       shell: purge-old-kernels -y
-      when: ansible_os_family == 'Ubuntu'
+      when: ansible_distribution == 'Ubuntu'
 
     - name: Remove dependencies that are no longer required - Ubuntu 14.04
       shell: apt-get autoremove -y
-      when: ansible_os_family == 'Ubuntu' and ansible_distribution_release == '14.04'
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty'
       
     - name: Remove dependencies that are no longer required - Ubuntu 16.04
       shell: apt-get autoremove --purge -y
-      when: ansible_os_family == 'Ubuntu' and ansible_distribution_release == '16.04'
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'xenial'
          
     - name: Update cache - Ubuntu
       apt:
         update_cache: yes
-      when: ansible_os_family == "Ubuntu"
+      when: ansible_distribution == 'Ubuntu' 
 
     - name: Running security upgrades (unattended upgrades) - Ubuntu
       shell: unattended-upgrades -v
-      when: ansible_os_family == "Ubuntu"
+      when: ansible_distribution == 'Ubuntu' 
 
     - name: Install yum-utils - RHEL/CentOS
       yum: 
