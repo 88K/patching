@@ -13,12 +13,6 @@
       shell: package-cleanup --oldkernels --count=2 -y
       when: ansible_os_family == "RedHat"
 
-# Disable due to bug - https://github.com/ansible/ansible/issues/33461
-#    - name: Update Yum Cache - RedHat OS Family
-#      yum:
-#        update_cache: yes
-#      when: ansible_os_family == "RedHat"
-
     - name: Upgrade All Packages - RedHat OS Family
       yum:
         name: '*'
