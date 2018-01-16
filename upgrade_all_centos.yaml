@@ -13,9 +13,13 @@
       shell: package-cleanup --oldkernels --count=2 -y
       when: ansible_os_family == "RedHat"
 
-    - name: Update Yum Cache - RedHat OS Family
-      yum:
-        update_cache: yes
+#    - name: Update Yum Cache - RedHat OS Family
+#      yum:
+#        update_cache: yes
+#      when: ansible_os_family == "RedHat"
+     
+    - name: Check Package Updates - RedHat OS Family
+      shell: yum check-update
       when: ansible_os_family == "RedHat"
 
     - name: Upgrade All Packages - RedHat OS Family
