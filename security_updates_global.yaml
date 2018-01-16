@@ -1,46 +1,52 @@
 ---
-- name: Security Updates Playbook for RedHat and Debian based systems.
+- name: Security updates playbook for Ubuntu and RHEL/CentOS systems.
   hosts: all
   tasks:
-    - name: Purge Old Kernels - Debian OS Family
+    - name: Purge old kernels - Ubuntu
       shell: purge-old-kernels -y
-      when: ansible_os_family == "Debian"
+      when: ansible_os_family == 'Ubuntu'
 
-    - name: Remove unwanted packages - Debian OS Family
+    # For Ubuntu 14.04
+    - name: Remove dependencies that are no longer required - Ubuntu 14.04
       shell: apt-get autoremove -y
-      when: ansible_os_family == "Debian"
+      when: ansible_os_family == 'Ubuntu' and ansible_distribution_release == 'trusty'
+      
+     # For Ubuntu 16.04
+    - name: Remove dependencies that are no longer required - Ubuntu 16.04
+      shell: apt-get autoremove --purge -y
+      when: ansible_os_family == 'Ubuntu' and ansible_distribution_release == 'xenial'
          
-    - name: Update Cache - Debian OS Family
+    - name: Update cache - Ubuntu
       apt:
         update_cache: yes
-      when: ansible_os_family == "Debian"
+      when: ansible_os_family == "Ubuntu"
 
-    - name: Running security upgrades (unattended upgrades)
+    - name: Running security upgrades (unattended upgrades) - Ubuntu
       shell: unattended-upgrades -v
-      when: ansible_os_family == "Debian"
+      when: ansible_os_family == "Ubuntu"
 
-    - name: Install yum-utils - RedHat OS Family
+    - name: Install yum-utils - RHEL/CentOS
       yum: 
         name: yum-utils
         state: latest
       when: ansible_os_family == "RedHat"
 
-    - name: Remove Old Kernels - RedHat OS Family
+    - name: Remove old kernels - RHEL/CentOS
       shell: package-cleanup --oldkernels --count=2 -y
       when: ansible_os_family == "RedHat"
 
-    - name: Install yum security plugin on RHEL 5.X 
+    - name: Install yum security plugin on RHEL/CentOS 5.X 
       yum: 
         name: yum-security 
         state: latest
       when: ansible_os_family == "RedHat" and ansible_lsb.major_release | int <6
 
-    - name: Install yum security plugin on RHEL 6.X 
+    - name: Install yum security plugin on RHEL/CentOS 6.X 
       yum: 
         name: yum-plugin-security
         state: latest
       when: ansible_os_family == "RedHat" and ansible_lsb.major_release | int >=6
 
-    - name: Installing Security Updates on RedHat based systems (Type - update-minimal)
+    - name: Installing security updates on RHEL/CentOS systems (Type - update-minimal)
       shell: yum update-minimal --security -y
       when: ansible_os_family == "RedHat"
