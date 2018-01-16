@@ -29,11 +29,6 @@
       shell: package-cleanup --oldkernels --count=2 -y
       when: ansible_os_family == "RedHat"
 
-    - name: Update Cache - RedHat OS Family
-      yum:
-        update_cache: yes
-      when: ansible_os_family == "RedHat" 
-
     - name: Install yum security plugin on RHEL 5.X 
       yum: 
         name: yum-security 
