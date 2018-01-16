@@ -19,7 +19,7 @@
 #      when: ansible_os_family == "RedHat"
      
     - name: Check Package Updates - RedHat OS Family
-      shell: yum check-update
+      command: yum check-update
       when: ansible_os_family == "RedHat"
 
     - name: Upgrade All Packages - RedHat OS Family
