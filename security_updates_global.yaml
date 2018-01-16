@@ -6,12 +6,10 @@
       shell: purge-old-kernels -y
       when: ansible_os_family == 'Ubuntu'
 
-    # For Ubuntu 14.04
     - name: Remove dependencies that are no longer required - Ubuntu 14.04
       shell: apt-get autoremove -y
       when: ansible_os_family == 'Ubuntu' and ansible_distribution_release == 'trusty'
       
-     # For Ubuntu 16.04
     - name: Remove dependencies that are no longer required - Ubuntu 16.04
       shell: apt-get autoremove --purge -y
       when: ansible_os_family == 'Ubuntu' and ansible_distribution_release == 'xenial'
