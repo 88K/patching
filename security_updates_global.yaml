@@ -9,7 +9,7 @@
         name: bikeshed
         state: present
         update_cache: yes
-      when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty'
       
     - name: Purge old kernels - Ubuntu
       shell: purge-old-kernels -y
