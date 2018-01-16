@@ -1,6 +1,7 @@
 ---
 - name: Security updates playbook for Ubuntu and RHEL/CentOS systems.
   hosts: all
+  gather_facts: yes 
   tasks:
     - name: Purge old kernels - Ubuntu
       shell: purge-old-kernels -y
