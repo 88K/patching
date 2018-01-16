@@ -2,12 +2,18 @@
 - name: Upgrade_All_Packages Playbook for RedHat based systems.
   hosts: all
   tasks:
-  
+
+    - name: Install yum-utils - RedHat OS Family
+      yum: 
+        name: yum-utils
+        state: latest
+      when: ansible_os_family == "RedHat"
+    
     - name: Remove Old Kernels - RedHat OS Family
       shell: package-cleanup --oldkernels --count=2 -y
       when: ansible_os_family == "RedHat"
 
-    - name: Update Cache - RedHat OS Family
+    - name: Update Yum Cache - RedHat OS Family
       yum:
         update_cache: yes
       when: ansible_os_family == "RedHat"
@@ -16,5 +22,4 @@
       yum:
         name: '*'
         state: latest
-      when: ansible_os_family == "RedHat" 
-     
+      when: ansible_os_family == "RedHat"    
