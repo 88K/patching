@@ -32,7 +32,7 @@
       shell: unattended-upgrades -v
       when: ansible_distribution == 'Ubuntu' 
       
-      - name: Purge old kernels - Ubuntu
+    - name: Purge old kernels - Ubuntu
       shell: purge-old-kernels -y
       when: ansible_distribution == 'Ubuntu'
 
