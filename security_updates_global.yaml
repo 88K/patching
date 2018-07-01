@@ -1,5 +1,5 @@
 ---
-- name: Security updates playbook for Ubuntu and RHEL/CentOS systems.
+- name: Security updates playbook for Ubuntu.
   hosts: all
   gather_facts: yes 
   tasks:
@@ -31,29 +31,17 @@
     - name: Running security upgrades (unattended upgrades) - Ubuntu
       shell: unattended-upgrades -v
       when: ansible_distribution == 'Ubuntu' 
+      
+      - name: Purge old kernels - Ubuntu
+      shell: purge-old-kernels -y
+      when: ansible_distribution == 'Ubuntu'
 
-    - name: Install yum-utils - RHEL/CentOS
-      yum: 
-        name: yum-utils
-        state: latest
-      when: ansible_os_family == "RedHat"
+    - name: Remove dependencies that are no longer required - Ubuntu 14.04
+      shell: apt-get autoremove -y
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty'
+      
+    - name: Remove dependencies that are no longer required - Ubuntu 16.04
+      shell: apt-get autoremove --purge -y
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'xenial'
 
-    - name: Remove old kernels - RHEL/CentOS
-      shell: package-cleanup --oldkernels --count=2 -y
-      when: ansible_os_family == "RedHat"
-
-    - name: Install yum security plugin on RHEL/CentOS 5.X 
-      yum: 
-        name: yum-security 
-        state: latest
-      when: ansible_os_family == "RedHat" and ansible_lsb.major_release | int <6
-
-    - name: Install yum security plugin on RHEL/CentOS 6.X 
-      yum: 
-        name: yum-plugin-security
-        state: latest
-      when: ansible_os_family == "RedHat" and ansible_lsb.major_release | int >=6
-
-    - name: Installing security updates on RHEL/CentOS systems (Type - update-minimal)
-      shell: yum update-minimal --security -y
-      when: ansible_os_family == "RedHat"
+ 
