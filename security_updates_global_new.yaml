@@ -1,0 +1,14 @@
+---
+- name: Security updates playbook for Ubuntu.
+  hosts: all
+  gather_facts: yes 
+  tasks:
+ 
+
+    - name: Running security upgrades (unattended upgrades) - Ubuntu
+      shell: unattended-upgrades -v
+      when: ansible_distribution == 'Ubuntu' 
+      
+
+
+ 
