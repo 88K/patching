@@ -7,11 +7,12 @@
   ignore_errors: yes
   tasks:
     - name: Initiate graceful shutdown by nodetool flush and drain
-      shell: "/opt/continuum/cassandra/bin/nodetool {{item}} && sleep 5"
+      shell: "/opt/continuum/cassandra/bin/nodetool {{item}}"
       with_items:
         - flush
         - drain
-      async: 1
+      async: 10
+      poll: 5
     - name: Stop Cassandra service
       service:
         name: cassandra
@@ -19,10 +20,11 @@
     - name: rebooting {{ inventory_hostname }}
       ignore_errors: yes
       shell: "sleep 5 && /sbin/reboot"
-      async: 1
-    - name: Pause of 60 secs after boot up
+      async: 60
+      poll: 30
+    - name: Pause of 30 secs after boot up
       pause:
-        seconds: 60
+        seconds: 30
     - name: Start Cassandra Service
       service:
         name: cassandra
