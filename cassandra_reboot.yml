@@ -1,30 +1,37 @@
 ---
 - name: Gracefully shutting down cassandra nodes
   hosts: all
-  become_method: sudo
+  become: True
+  serial: 1
   gather_facts: false
+  ignore_errors: yes
   tasks:
     - name: Initiate graceful shutdown by nodetool flush and drain
       shell: "nodetool {{item}} && sleep 5"
       with_items:
         - flush
         - drain
+      async: 1
     - name: Stop Cassandra service
       service:
         name: cassandra
         state: stopped
     - name: rebooting {{ inventory_hostname }}
       ignore_errors: yes
-      shell: /sbin/reboot
+      shell: "sleep 5 && /sbin/reboot"
+      async: 1
+    - name: Pause of 60 secs after boot up
+      pause:
+        seconds: 60
     - name: Start Cassandra Service
       service:
         name: cassandra
         state: started
-    - name: Pause of 3 mins after boot up
+    - name: Pause of 1 mins after cassandra service start up
       pause:
-        seconds: 180
+        seconds: 60
     - name: Check the Status of the Node
-      shell:  nodetool status | grep -w {{ inventory_hostname }} > /tmp/output; awk '{print}' /tmp/output
+      shell: /opt/continuum/cassandra/bin/nodetool status | grep -w {{ inventory_hostname }} > /tmp/output; awk '{print $1}' /tmp/output
       register: nodetool_status
       failed_when: nodetool_status.stdout != "UN"
     - debug: var={{ item }}
