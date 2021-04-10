@@ -20,7 +20,7 @@
     - name: rebooting {{ inventory_hostname }}
       ignore_errors: yes
       shell: "sleep 5 && /sbin/reboot"
-      async: 60{{ inventory_hostname }}
+      async: 60
       poll: 30
     - name: Pause of 30 secs after boot up
       pause:
