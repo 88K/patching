@@ -3,11 +3,14 @@
   hosts: all
   gather_facts: yes 
   tasks:
- 
+    - name: Update cache - Ubuntu
+      apt:
+        update_cache: yes
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'bionic'
 
     - name: Running security upgrades (unattended upgrades) - Ubuntu
       shell: unattended-upgrades -v
-      when: ansible_distribution == 'Ubuntu' 
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'bionic'
       
 
 
