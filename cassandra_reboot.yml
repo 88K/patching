@@ -7,7 +7,7 @@
   ignore_errors: yes
   tasks:
     - name: Initiate graceful shutdown by nodetool flush and drain
-      shell: "nodetool {{item}} && sleep 5"
+      shell: "/opt/continuum/cassandra/bin/nodetool {{item}} && sleep 5"
       with_items:
         - flush
         - drain
