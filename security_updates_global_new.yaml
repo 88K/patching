@@ -9,7 +9,10 @@
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'bionic'
 
     - name: Running security upgrades (unattended upgrades) - Ubuntu
-      shell:  dpkg --configure -a && unattended-upgrade -d
+      shell:  |
+        dpkg --configure -a
+        unattended-upgrade -d
+        unattended-upgrade -d
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'bionic'
       
 
