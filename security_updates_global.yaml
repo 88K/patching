@@ -3,7 +3,10 @@
   hosts: all
   gather_facts: yes 
   tasks:
-  
+    - name: Reconfiguring dpkg to resolve lock issue..
+      shell:  |
+        dpkg --configure -a
+        
     - name: Install bikeshed package - Ubuntu 14.04
       apt:
         name: bikeshed
@@ -43,5 +46,16 @@
     - name: Remove dependencies that are no longer required - Ubuntu 16.04
       shell: apt-get autoremove --purge -y
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'xenial'
+      
+    - name: Update cache - Ubuntu
+      apt:
+        update_cache: yes
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'bionic'
+
+    - name: Running security upgrades (unattended upgrades) - Ubuntu
+      shell:  |
+        unattended-upgrade -d
+        unattended-upgrade -d
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'bionic'
 
  
